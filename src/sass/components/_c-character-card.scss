@@ -1,0 +1,26 @@
+.c-character-card {
+    transition: all 0.2s ease;
+    width: 380px;
+    height: 140px;
+    margin: 20px;
+
+    &:hover {
+        box-shadow: 2px 2px 15px 10px rgba(0, 0, 0, 0.2);
+        -webkit-box-shadow: 2px 2px 15px 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 2px 2px 15px 10px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease;
+    }
+
+    &__container {
+        margin: 15px;
+    }
+
+    &__name {
+        font-size: 18px;
+
+    }
+
+    &__info {
+        font-size: 14px;
+    }
+}
