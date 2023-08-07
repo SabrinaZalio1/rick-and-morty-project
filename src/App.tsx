@@ -10,6 +10,7 @@ export interface ICharacter {
   status: 'Alive' | 'Dead' | 'unknown';
   species: string;
   image: string;
+  episode: string[]
 }
 
 function App() {
