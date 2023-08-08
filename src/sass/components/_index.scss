@@ -1,1 +1,32 @@
-@import 'c-character-card'
+// $breakpoints: (
+//   sm: 576px,
+//   md: 768px,
+//   lg: 992px,
+//   xl: 1200px
+// );
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.loading-container {
+  height: 100vh;
+  width: 100%;
+  background-image: url('../../assets/img/loading-background.jpg');
+  background-size: cover;
+}
+
+.loading-container__text {
+  font-size: 24px;
+  color: rgb(212, 212, 212);
+  padding: 20px
+}
+
+@import 'c-character-card';
+@import 'c-characters-container';

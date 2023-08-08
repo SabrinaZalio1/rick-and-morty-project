@@ -7,7 +7,6 @@ interface ICharactersContainerProps {
     characters: ICharacter[];
 }
 
-
 interface ICharacterSection {
     sectionOne: ICharacter[];
     sectionTwo: ICharacter[];
@@ -36,9 +35,6 @@ export default function CharactersContainer({ characters }: ICharactersContainer
     });
 
     useEffect(() => {
-        // getEpisodesService(['1', '2'])
-        //     .then(res => console.log('episodes -> ', res.data))
-
         splitArray(characters);
     }, [characters]);
 
@@ -69,40 +65,46 @@ export default function CharactersContainer({ characters }: ICharactersContainer
 
     return (
         <>
-            <div className='c-characters-container d-flex'>
+            <div className='c-characters-container d-flex p-4'>
                 <div>
-                    <span>Character #1</span>
-                    {characterSection.sectionOne.map(({ id, name, status, species, image, episode }) => (
-                        <CharacterCard
-                            key={id}
-                            {...{
-                                id,
-                                name,
-                                status,
-                                species,
-                                image,
-                                setCharacter: (character: Pick<ICharacter, 'id' | 'episode'>) => selectCharacter('characterOne', character),
-                                isSelected: id === selectedCharacter.characterOne?.id,
-                                episode
-                            }} />
-                    ))}
+                    <h2>Character #1</h2>
+                    <div className=' d-flex flex-wrap justify-content-center gap-3 mt-4'>
+                        {characterSection.sectionOne.map(({ id, name, status, species, image, episode }) => (
+                            <CharacterCard
+                                key={id}
+                                {...{
+                                    id,
+                                    name,
+                                    status,
+                                    species,
+                                    image,
+                                    setCharacter: (character: Pick<ICharacter, 'id' | 'episode'>) => selectCharacter('characterOne', character),
+                                    isSelected: id === selectedCharacter.characterOne?.id,
+                                    episode
+                                }} />
+                        ))}
+                    </div>
                 </div>
-                <div>
-                    <span>Character #2</span>
-                    {/* {characterSection.sectionTwo.map(({ id, name, status, species, image, episode }) => (
-                        <CharacterCard
-                            key={id}
-                            {...{
-                                id,
-                                name,
-                                status,
-                                species,
-                                image,
-                                setCharacter: (id: ICharacter['id']) => selectCharacter('characterTwo', id),
-                                isSelected: id === selectedCharacter.characterTwo?.id,
-                                episode
-                            }} />
-                    ))} */}
+
+                <div >
+                    <h2>Character #2</h2>
+                    <div className=' d-flex flex-wrap justify-content-center gap-3 mt-4'>
+                        {characterSection.sectionTwo.map(({ id, name, status, species, image, episode }) => (
+                            <CharacterCard
+                                key={id}
+                                {...{
+                                    id,
+                                    name,
+                                    status,
+                                    species,
+                                    image,
+                                    setCharacter: (character: Pick<ICharacter, 'id' | 'episode'>) => selectCharacter('characterTwo', character),
+                                    isSelected: id === selectedCharacter.characterTwo?.id,
+                                    episode
+                                }} />
+                        ))}
+                    </div>
+
                 </div>
             </div>
             <div>
