@@ -19,10 +19,6 @@ interface ICharacterSelected {
 }
 
 export default function CharactersContainer({ characters }: ICharactersContainerProps) {
-    // const [characterSection, setCharacterSection] = useState<{ sectionOne: ICharacter[], sectionTwo: ICharacter[] }>({
-    //     sectionOne: [],
-    //     sectionTwo: [],
-    // });
 
     const [characterSection, setCharacterSection] = useState<ICharacterSection>({
         sectionOne: [],
@@ -53,7 +49,6 @@ export default function CharactersContainer({ characters }: ICharactersContainer
         const value = selectedCharacter[key]?.id === character.id ? null : character;
         return setSelectedCharacter({ ...selectedCharacter, [key]: value });
     }
-    // console.log('selected c', selectedCharacter)
 
     console.log('selected character', selectedCharacter.characterOne)
     if (selectedCharacter.characterOne) {
@@ -107,14 +102,14 @@ export default function CharactersContainer({ characters }: ICharactersContainer
 
                 </div>
             </div>
-            <div>
+            {/* <div>
                 <div>
                     <p>Character #1 - Only episodes</p>
                     <div>
 
                     </div>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

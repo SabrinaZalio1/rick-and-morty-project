@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import CharactersContainer from './components/CharactersContainer';
 import axios from 'axios';
 import { getCharactersService } from './service/index.service';
+import EpisodesContainer from './components/EpisodesContainer';
 
 export interface ICharacter {
   id: number;
@@ -33,7 +34,7 @@ function App() {
         setTimeout(() => {
           setIsLoading(false);
           setShowLoadingForFewSeconds(false);
-        }, 5000); // Adjust the delay time (in milliseconds) as needed
+        }, 3000); // Adjust the delay time (in milliseconds) as needed
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -50,7 +51,10 @@ function App() {
           <p className='loading-container__text'>Loading...</p>
         </div>
       ) : (
-        <CharactersContainer characters={data} />
+        <>
+          <CharactersContainer characters={data} />
+          <EpisodesContainer />
+        </>
       )}
     </div>
   );
