@@ -1,15 +1,7 @@
 import { useState, useEffect } from 'react';
 import CharactersContainer from './components/CharactersContainer';
 import { getCharactersService } from './service/index.service';
-
-export interface ICharacter {
-  id: number;
-  name: string;
-  status: 'Alive' | 'Dead' | 'unknown';
-  species: string;
-  image: string;
-  episode: string[]
-}
+import { ICharacter } from './interface/index.interface';
 
 function App() {
 
@@ -19,10 +11,9 @@ function App() {
 
   const [showLoadingView, setShowLoadingView] = useState(true);
 
-  const [charactersSelect, setCharacterSelected] = useState<{ characterOne: ICharacter | null, characterTwo: ICharacter | null }>({
-    characterOne: null, characterTwo: null
-  })
-
+  // const [charactersSelect, setCharacterSelected] = useState<{ characterOne: ICharacter | null, characterTwo: ICharacter | null }>({
+  //   characterOne: null, characterTwo: null
+  // })
 
   useEffect(() => {
     getCharactersService()
@@ -46,9 +37,7 @@ function App() {
           <p className='loading-container__text'>Loading...</p>
         </div>
         :
-        <>
-          <CharactersContainer characters={data} />
-        </>
+        <CharactersContainer characters={data} />
       }
     </div>
   );

@@ -1,4 +1,5 @@
-import { ICharacter } from '../App'
+import { ICharacter } from "../interface/index.interface";
+
 interface ICharacterCard extends ICharacter {
     setCharacter: (character: Pick<ICharacter, 'id' | 'episode'>) => void;
     isSelected: boolean;

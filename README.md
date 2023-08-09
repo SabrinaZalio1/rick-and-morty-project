@@ -4,9 +4,7 @@ This project was bootstrapped with Create React App.
 
 ## Technologies used:
 
-.Bootstrap
-.SASS
-.Axios
+Bootstrap - SASS - Axios
 
 ## Available Scripts
 

@@ -1,21 +1,11 @@
 import { useState, useEffect } from 'react';
 import CharacterCard from './CharacterCard';
-import { ICharacter } from '../App';
 import { getEpisodesService } from '../service/index.service';
 import EpisodesContainer from './EpisodesContainer';
-import { IEpisode } from '../interface/index.interface';
+import { ICharacter, ICharacterSection, ICharacterSelected, IEpisode } from '../interface/index.interface';
 
 interface ICharactersContainerProps {
     characters: ICharacter[];
-}
-
-interface ICharacterSection {
-    sectionOne: ICharacter[];
-    sectionTwo: ICharacter[];
-}
-interface ICharacterSelected {
-    characterOne: Pick<ICharacter, 'id' | 'episode'> | null;
-    characterTwo: Pick<ICharacter, 'id' | 'episode'> | null
 }
 
 export default function CharactersContainer({ characters }: ICharactersContainerProps) {
@@ -52,14 +42,13 @@ export default function CharactersContainer({ characters }: ICharactersContainer
         const value = selectedCharacter[key]?.id === character.id ? null : character;
         return setSelectedCharacter({ ...selectedCharacter, [key]: value });
     }
-
+    console.log(selectedCharacter.characterOne)
     // console.log('selected character', selectedCharacter.characterOne)
     // console.log('character two episodes in characters container', characterTwoEpisodes)
     useEffect(() => {
         if (selectedCharacter.characterOne) {
             getEpisodesService(selectedCharacter.characterOne.episode)
                 .then(res => {
-                    // console.log('res de episode', res.data);
                     setCharacterOneEpisodes(res.data);
                 })
                 .catch(error => {
@@ -68,6 +57,7 @@ export default function CharactersContainer({ characters }: ICharactersContainer
                 });
         }
     }, [selectedCharacter.characterOne]);
+
     useEffect(() => {
         if (selectedCharacter.characterTwo) {
             getEpisodesService(selectedCharacter.characterTwo.episode)
@@ -127,9 +117,8 @@ export default function CharactersContainer({ characters }: ICharactersContainer
 
                 </div>
             </div>
-            <div>
-                <EpisodesContainer characterOneEpisodes={characterOneEpisodes} characterTwoEpisodes={characterTwoEpisodes} />
-            </div>
+
+            <EpisodesContainer characterOneSelected={selectedCharacter.characterOne} characterTwoSelected={selectedCharacter.characterTwo} characterOneEpisodes={characterOneEpisodes} characterTwoEpisodes={characterTwoEpisodes} />
         </>
     );
 }
