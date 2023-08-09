@@ -1,25 +1,22 @@
 import { IEpisode } from '../interface/index.interface';
 
 interface EpisodesContainerProps {
-    characterOneEpisodes: IEpisode[] | IEpisode;
-    characterTwoEpisodes: IEpisode[] | IEpisode;
+    characterOneEpisodes: IEpisode[];
+    characterTwoEpisodes: IEpisode[];
     characterOneSelected: any;
     characterTwoSelected: any;
+    sharedEpisodes: any;
 }
 
-export default function EpisodesContainer({ characterOneEpisodes, characterTwoEpisodes, characterOneSelected, characterTwoSelected }: EpisodesContainerProps) {
-    // console.log('character two episodes', characterTwoEpisodes)
-    const characterOneEpisodesArray = Array.isArray(characterOneEpisodes) ? characterOneEpisodes : [characterOneEpisodes];
-
-    const characterTwoEpisodesArray = Array.isArray(characterTwoEpisodes) ? characterTwoEpisodes : [characterTwoEpisodes];
+export default function EpisodesContainer({ characterOneEpisodes, characterTwoEpisodes, characterOneSelected, characterTwoSelected, sharedEpisodes }: EpisodesContainerProps) {
 
     return (
         <div className='c-episode-container d-flex justify-content-around'>
             <div className='border border-dark w-100'>
                 <h5 className='text-center py-4'>Character #1 - Only episodes</h5>
 
-                {characterOneSelected === null ? <div>no selected yet</div> :
-                    characterOneEpisodesArray.map(({ air_date, name, episode }: IEpisode) => (
+                {characterOneSelected === null ? <div className='text-center mt-2'>not selected yet</div> :
+                    characterOneEpisodes.map(({ air_date, name, episode }: IEpisode) => (
                         <div className='px-3 mb-2'>
                             <span className='fw-bold'>{episode}: </span>
                             <span>{name} - </span>
@@ -30,12 +27,20 @@ export default function EpisodesContainer({ characterOneEpisodes, characterTwoEp
             </div>
             <div className='border border-dark w-100'>
                 <h5 className='text-center py-4'>Character #1 & #2 - Shared episodes</h5>
-
+                {
+                    sharedEpisodes.map(({ air_date, episode, name }: IEpisode) => (
+                        <div className='px-3 mb-2'>
+                            <span className='fw-bold'>{episode}: </span>
+                            <span>{name} - </span>
+                            <span>{air_date}</span>
+                        </div>
+                    ))
+                }
             </div>
             <div className='border border-dark w-100'>
                 <h5 className='text-center py-4'>Character #2 - Only episodes</h5>
-                {characterTwoSelected === null ? <div>no selected yet</div> :
-                    characterTwoEpisodesArray.map(({ air_date, name, episode }: IEpisode) => (
+                {characterTwoSelected === null ? <div className='text-center mt-2'>not selected yet</div> :
+                    characterTwoEpisodes.map(({ air_date, name, episode }: IEpisode) => (
                         <div className='px-3 mb-2'>
                             <span className='fw-bold'>{episode}: </span>
                             <span>{name} - </span>

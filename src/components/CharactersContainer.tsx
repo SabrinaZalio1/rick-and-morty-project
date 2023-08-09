@@ -23,6 +23,8 @@ export default function CharactersContainer({ characters }: ICharactersContainer
     const [characterOneEpisodes, setCharacterOneEpisodes] = useState<IEpisode[]>([]);
     const [characterTwoEpisodes, setCharacterTwoEpisodes] = useState<IEpisode[]>([]);
 
+    const [sharedEpisodes, setSharedEpisodes] = useState<IEpisode[]>([]);
+
     useEffect(() => {
         splitArray(characters);
     }, [characters]);
@@ -42,14 +44,13 @@ export default function CharactersContainer({ characters }: ICharactersContainer
         const value = selectedCharacter[key]?.id === character.id ? null : character;
         return setSelectedCharacter({ ...selectedCharacter, [key]: value });
     }
-    console.log(selectedCharacter.characterOne)
-    // console.log('selected character', selectedCharacter.characterOne)
-    // console.log('character two episodes in characters container', characterTwoEpisodes)
+
     useEffect(() => {
         if (selectedCharacter.characterOne) {
             getEpisodesService(selectedCharacter.characterOne.episode)
                 .then(res => {
-                    setCharacterOneEpisodes(res.data);
+                    const data = Array.isArray(res.data) ? res.data : [res.data]
+                    setCharacterOneEpisodes(data);
                 })
                 .catch(error => {
                     console.error('Error fetching episodes:', error);
@@ -62,8 +63,8 @@ export default function CharactersContainer({ characters }: ICharactersContainer
         if (selectedCharacter.characterTwo) {
             getEpisodesService(selectedCharacter.characterTwo.episode)
                 .then(res => {
-                    // console.log('res de episode', res.data);
-                    setCharacterTwoEpisodes(res.data);
+                    const data = Array.isArray(res.data) ? res.data : [res.data]
+                    setCharacterTwoEpisodes(data);
                 })
                 .catch(error => {
                     console.error('Error fetching episodes:', error);
@@ -72,10 +73,19 @@ export default function CharactersContainer({ characters }: ICharactersContainer
         }
     }, [selectedCharacter.characterTwo]);
 
-    // console.log('selec', selectedCharacter.characterOne)
+    useEffect(() => {
+
+        const shared = characterOneEpisodes.filter((characterOneEpisode) => {
+            return characterTwoEpisodes.find((characterTwoEpisode) => {
+                return characterOneEpisode.id === characterTwoEpisode.id;
+            })
+        })
+        setSharedEpisodes(shared)
+    }, [selectedCharacter.characterOne, selectedCharacter.characterTwo])
+
     return (
-        <>
-            <div className='c-characters-container d-flex'>
+        <div className='d-flex flex-column h-100'>
+            <div className='c-characters-container d-flex '>
                 <div>
                     <h2>Character #1</h2>
                     <div className=' d-flex flex-wrap justify-content-center gap-3 mt-4'>
@@ -118,7 +128,13 @@ export default function CharactersContainer({ characters }: ICharactersContainer
                 </div>
             </div>
 
-            <EpisodesContainer characterOneSelected={selectedCharacter.characterOne} characterTwoSelected={selectedCharacter.characterTwo} characterOneEpisodes={characterOneEpisodes} characterTwoEpisodes={characterTwoEpisodes} />
-        </>
+            <EpisodesContainer
+                characterOneSelected={selectedCharacter.characterOne}
+                characterTwoSelected={selectedCharacter.characterTwo}
+                characterOneEpisodes={characterOneEpisodes}
+                characterTwoEpisodes={characterTwoEpisodes}
+                sharedEpisodes={sharedEpisodes}
+            />
+        </div>
     );
 }
