@@ -13,7 +13,6 @@ interface ICharacterSection {
     sectionOne: ICharacter[];
     sectionTwo: ICharacter[];
 }
-
 interface ICharacterSelected {
     characterOne: Pick<ICharacter, 'id' | 'episode'> | null;
     characterTwo: Pick<ICharacter, 'id' | 'episode'> | null
@@ -31,7 +30,8 @@ export default function CharactersContainer({ characters }: ICharactersContainer
         characterTwo: null,
     });
 
-    const [characterOneEpisodes, setCharacterOneEpisodes] = useState<IEpisode[]>([]); // State to hold episodes
+    const [characterOneEpisodes, setCharacterOneEpisodes] = useState<IEpisode[]>([]);
+    const [characterTwoEpisodes, setCharacterTwoEpisodes] = useState<IEpisode[]>([]);
 
     useEffect(() => {
         splitArray(characters);
@@ -54,20 +54,34 @@ export default function CharactersContainer({ characters }: ICharactersContainer
     }
 
     // console.log('selected character', selectedCharacter.characterOne)
-    console.log('character one episodes', characterOneEpisodes)
+    // console.log('character two episodes in characters container', characterTwoEpisodes)
     useEffect(() => {
         if (selectedCharacter.characterOne) {
             getEpisodesService(selectedCharacter.characterOne.episode)
                 .then(res => {
-                    console.log('res de episode', res.data);
+                    // console.log('res de episode', res.data);
                     setCharacterOneEpisodes(res.data);
                 })
                 .catch(error => {
                     console.error('Error fetching episodes:', error);
-                    setCharacterOneEpisodes([]); // Reset episodes state in case of error
+                    setCharacterOneEpisodes([]);
                 });
         }
     }, [selectedCharacter.characterOne]);
+    useEffect(() => {
+        if (selectedCharacter.characterTwo) {
+            getEpisodesService(selectedCharacter.characterTwo.episode)
+                .then(res => {
+                    // console.log('res de episode', res.data);
+                    setCharacterTwoEpisodes(res.data);
+                })
+                .catch(error => {
+                    console.error('Error fetching episodes:', error);
+                    setCharacterTwoEpisodes([]);
+                });
+        }
+    }, [selectedCharacter.characterTwo]);
+
     // console.log('selec', selectedCharacter.characterOne)
     return (
         <>
@@ -114,7 +128,7 @@ export default function CharactersContainer({ characters }: ICharactersContainer
                 </div>
             </div>
             <div>
-                <EpisodesContainer characterOneEpisodes={characterOneEpisodes} />
+                <EpisodesContainer characterOneEpisodes={characterOneEpisodes} characterTwoEpisodes={characterTwoEpisodes} />
             </div>
         </>
     );
