@@ -22,19 +22,17 @@ function App() {
   const [charactersSelect, setCharacterSelected] = useState<{ characterOne: ICharacter | null, characterTwo: ICharacter | null }>({
     characterOne: null, characterTwo: null
   })
-  const [showLoadingForFewSeconds, setShowLoadingForFewSeconds] = useState(true); // Add a state for controlling the loading view
+  const [showLoadingForFewSeconds, setShowLoadingForFewSeconds] = useState(true);
 
 
   useEffect(() => {
     getCharactersService()
       .then((response) => {
         setData(response.data.results);
-
-        // Delay the removal of the loading view for a few seconds
         setTimeout(() => {
           setIsLoading(false);
           setShowLoadingForFewSeconds(false);
-        }, 3000); // Adjust the delay time (in milliseconds) as needed
+        }, 3000);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -42,20 +40,18 @@ function App() {
       });
   }, []);
 
-  console.log('data', data)
+  // console.log('data', data)
   return (
     <div className="App ">
-      {(isLoading || (showLoadingForFewSeconds && !data)) ? (
+      {(isLoading || (showLoadingForFewSeconds && !data)) ?
         <div className='loading-container'>
-
           <p className='loading-container__text'>Loading...</p>
         </div>
-      ) : (
+        :
         <>
           <CharactersContainer characters={data} />
-          <EpisodesContainer />
         </>
-      )}
+      }
     </div>
   );
 }
