@@ -1,4 +1,5 @@
 import { IEpisode } from '../interface/index.interface';
+import { EpisodesInfo } from './EpisodesInfo';
 
 interface EpisodesContainerProps {
     characterOneEpisodes: IEpisode[];
@@ -16,38 +17,20 @@ export default function EpisodesContainer({ characterOneEpisodes, characterTwoEp
                 <h5 className='text-center py-4'>Character #1 - Only episodes</h5>
 
                 {characterOneSelected === null ? <div className='text-center mt-2'>not selected yet</div> :
-                    characterOneEpisodes.map(({ air_date, name, episode }: IEpisode) => (
-                        <div className='px-3 mb-2'>
-                            <span className='fw-bold'>{episode}: </span>
-                            <span>{name} - </span>
-                            <span>{air_date}</span>
-                        </div>
-                    ))
+                    <EpisodesInfo episodes={characterOneEpisodes} />
                 }
             </div>
             <div className='c-episodes-container__list w-100'>
 
                 <h5 className='text-center py-4'>Character #1 & #2 - Shared episodes</h5>
                 {(characterOneSelected === null || characterTwoSelected === null) ? <div className='text-center mt-2'>not selected yet</div> :
-                    sharedEpisodes.map(({ air_date, episode, name }: IEpisode) => (
-                        <div className='px-3 mb-2'>
-                            <span className='fw-bold'>{episode}: </span>
-                            <span>{name} - </span>
-                            <span>{air_date}</span>
-                        </div>
-                    ))
+                    <EpisodesInfo episodes={sharedEpisodes} />
                 }
             </div>
             <div className='c-episodes-container__list w-100'>
                 <h5 className='text-center py-4'>Character #2 - Only episodes</h5>
                 {characterTwoSelected === null ? <div className='text-center mt-2'>not selected yet</div> :
-                    characterTwoEpisodes.map(({ air_date, name, episode }: IEpisode) => (
-                        <div className='px-3 mb-2'>
-                            <span className='fw-bold'>{episode}: </span>
-                            <span>{name} - </span>
-                            <span>{air_date}</span>
-                        </div>
-                    ))
+                    <EpisodesInfo episodes={characterTwoEpisodes} />
                 }
             </div>
         </div>
