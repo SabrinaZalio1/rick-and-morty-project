@@ -9,19 +9,12 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const [showLoadingView, setShowLoadingView] = useState(true);
-
-  // const [charactersSelect, setCharacterSelected] = useState<{ characterOne: ICharacter | null, characterTwo: ICharacter | null }>({
-  //   characterOne: null, characterTwo: null
-  // })
-
   useEffect(() => {
     getCharactersService()
       .then((response) => {
         setData(response.data.results);
         setTimeout(() => {
           setIsLoading(false);
-          setShowLoadingView(false);
         }, 2000);
       })
       .catch((error) => {
@@ -32,7 +25,7 @@ function App() {
 
   return (
     <div className="App">
-      {(isLoading || (showLoadingView && !data)) ?
+      {isLoading ?
         <div className='loading-container'>
           <p className='loading-container__text'>Loading...</p>
         </div>

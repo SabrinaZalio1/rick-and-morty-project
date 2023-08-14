@@ -11,8 +11,8 @@ interface EpisodesContainerProps {
 export default function EpisodesContainer({ characterOneEpisodes, characterTwoEpisodes, characterOneSelected, characterTwoSelected, sharedEpisodes }: EpisodesContainerProps) {
 
     return (
-        <div className='c-episode-container d-flex justify-content-around'>
-            <div className='border border-dark w-100'>
+        <div className='c-episodes-container d-flex justify-content-around'>
+            <div className='c-episodes-container__list w-100'>
                 <h5 className='text-center py-4'>Character #1 - Only episodes</h5>
 
                 {characterOneSelected === null ? <div className='text-center mt-2'>not selected yet</div> :
@@ -25,9 +25,10 @@ export default function EpisodesContainer({ characterOneEpisodes, characterTwoEp
                     ))
                 }
             </div>
-            <div className='border border-dark w-100'>
+            <div className='c-episodes-container__list w-100'>
+
                 <h5 className='text-center py-4'>Character #1 & #2 - Shared episodes</h5>
-                {
+                {(characterOneSelected === null || characterTwoSelected === null) ? <div className='text-center mt-2'>not selected yet</div> :
                     sharedEpisodes.map(({ air_date, episode, name }: IEpisode) => (
                         <div className='px-3 mb-2'>
                             <span className='fw-bold'>{episode}: </span>
@@ -37,7 +38,7 @@ export default function EpisodesContainer({ characterOneEpisodes, characterTwoEp
                     ))
                 }
             </div>
-            <div className='border border-dark w-100'>
+            <div className='c-episodes-container__list w-100'>
                 <h5 className='text-center py-4'>Character #2 - Only episodes</h5>
                 {characterTwoSelected === null ? <div className='text-center mt-2'>not selected yet</div> :
                     characterTwoEpisodes.map(({ air_date, name, episode }: IEpisode) => (
