@@ -3,6 +3,7 @@ import CharacterCard from './CharacterCard';
 import { getEpisodesService } from '../service/index.service';
 import EpisodesContainer from './EpisodesContainer';
 import { ICharacter, ICharacterSection, ICharacterSelected, IEpisode } from '../interface/index.interface';
+import Paginator from './Paginator';
 
 interface ICharactersContainerProps {
     characters: ICharacter[];
@@ -25,9 +26,11 @@ export default function CharactersContainer({ characters }: ICharactersContainer
 
     const [sharedEpisodes, setSharedEpisodes] = useState<IEpisode[]>([]);
 
+    //for paginator
     const [currentPage, setCurrentPage] = useState(1);
     const charactersPerPage = 12;
     const totalPages = Math.ceil(characters.length / charactersPerPage);
+    //
 
     useEffect(() => {
         splitArray(characters);
@@ -44,7 +47,7 @@ export default function CharactersContainer({ characters }: ICharactersContainer
         });
     };
 
-
+    //for paginator
     const handlePrevPage = () => {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
@@ -56,6 +59,7 @@ export default function CharactersContainer({ characters }: ICharactersContainer
             setCurrentPage(currentPage + 1);
         }
     };
+    //
 
     const selectCharacter = (key: 'characterOne' | 'characterTwo', character: Pick<ICharacter, 'id' | 'episode'>) => {
         const value = selectedCharacter[key]?.id === character.id ? null : character;
@@ -145,14 +149,12 @@ export default function CharactersContainer({ characters }: ICharactersContainer
                 </div>
 
             </div>
-            <div className='d-flex justify-content-center'>
-                <button onClick={handlePrevPage} disabled={currentPage === 1}>
-                    Previous
-                </button>
-                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-                    Next
-                </button>
-            </div>
+            <Paginator
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPrevPage={handlePrevPage}
+                onNextPage={handleNextPage}
+            />
             <EpisodesContainer
                 characterOneSelected={selectedCharacter.characterOne}
                 characterTwoSelected={selectedCharacter.characterTwo}

@@ -2,4 +2,20 @@
   &__list {
     border: 1px solid #cdcdcd;
   }
+
+  &__title {
+    font-size: 12px;
+
+    @media (min-width: 768px) {
+      font-size: 18px;
+    }
+  }
+
+  &__empty-state {
+    font-size: 10px;
+
+    @media (min-width: 768px) {
+      font-size: 16px;
+    }
+  }
 }
