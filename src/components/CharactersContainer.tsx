@@ -25,19 +25,36 @@ export default function CharactersContainer({ characters }: ICharactersContainer
 
     const [sharedEpisodes, setSharedEpisodes] = useState<IEpisode[]>([]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const charactersPerPage = 12;
+    const totalPages = Math.ceil(characters.length / charactersPerPage);
+
     useEffect(() => {
         splitArray(characters);
-    }, [characters]);
+    }, [characters, currentPage]);
 
     const splitArray = (characters: ICharacter[]) => {
-        const midIndex = Math.ceil(characters.length / 2);
-        const sectionOneArray = characters.slice(0, midIndex);
-        const sectionTwoArray = characters.slice(midIndex);
+        const startIndex = (currentPage - 1) * charactersPerPage;
+        const endIndex = startIndex + charactersPerPage;
+        const charactersToDisplay = characters.slice(startIndex, endIndex);
 
         setCharacterSection({
-            sectionOne: sectionOneArray,
-            sectionTwo: sectionTwoArray,
+            sectionOne: charactersToDisplay.slice(0, Math.ceil(charactersToDisplay.length / 2)),
+            sectionTwo: charactersToDisplay.slice(Math.ceil(charactersToDisplay.length / 2)),
         });
+    };
+
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
     const selectCharacter = (key: 'characterOne' | 'characterTwo', character: Pick<ICharacter, 'id' | 'episode'>) => {
@@ -126,8 +143,16 @@ export default function CharactersContainer({ characters }: ICharactersContainer
                     </div>
 
                 </div>
-            </div>
 
+            </div>
+            <div className='d-flex justify-content-center'>
+                <button onClick={handlePrevPage} disabled={currentPage === 1}>
+                    Previous
+                </button>
+                <button onClick={handleNextPage} disabled={currentPage === totalPages}>
+                    Next
+                </button>
+            </div>
             <EpisodesContainer
                 characterOneSelected={selectedCharacter.characterOne}
                 characterTwoSelected={selectedCharacter.characterTwo}
