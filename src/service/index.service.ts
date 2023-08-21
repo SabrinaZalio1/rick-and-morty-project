@@ -6,7 +6,6 @@ export function getEpisodesService(episodes: string[]) {
     return axios.get<IEpisode[]>(url)
 }
 
-// service (la request entera) =/= endpoint (url)
 
 export function getCharactersService() {
     const url = 'https://rickandmortyapi.com/api/character';
