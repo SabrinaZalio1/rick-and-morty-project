@@ -14,11 +14,12 @@ export default function CharacterCard({ id, name, status, species, image, setCha
             const lastSegment = segments[segments.length - 1];
 
             return lastSegment
-        })
-    }
+        });
+    };
+
     const handleOnClick = () => {
-        setCharacter({ id, episode: getEpisodeId(episode) })
-    }
+        setCharacter({ id, episode: getEpisodeId(episode) });
+    };
 
     let statusClass = '';
 

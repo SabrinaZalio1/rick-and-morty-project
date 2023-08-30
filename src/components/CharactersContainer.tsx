@@ -95,7 +95,6 @@ export default function CharactersContainer({ characters }: ICharactersContainer
     }, [selectedCharacter.characterTwo]);
 
     useEffect(() => {
-
         const shared = characterOneEpisodes.filter((characterOneEpisode) => {
             return characterTwoEpisodes.find((characterTwoEpisode) => {
                 return characterOneEpisode.id === characterTwoEpisode.id;

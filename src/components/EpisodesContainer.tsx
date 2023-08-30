@@ -1,12 +1,12 @@
-import { IEpisode } from '../interface/index.interface';
+import { ICharacter, IEpisode } from '../interface/index.interface';
 import { EpisodesInfo } from './EpisodesInfo';
 
 interface EpisodesContainerProps {
     characterOneEpisodes: IEpisode[];
     characterTwoEpisodes: IEpisode[];
-    characterOneSelected: any;
-    characterTwoSelected: any;
-    sharedEpisodes: any;
+    characterOneSelected: Pick<ICharacter, "episode" | "id"> | null;
+    characterTwoSelected: Pick<ICharacter, "episode" | "id"> | null;
+    sharedEpisodes: IEpisode[];
 }
 
 export default function EpisodesContainer({ characterOneEpisodes, characterTwoEpisodes, characterOneSelected, characterTwoSelected, sharedEpisodes }: EpisodesContainerProps) {
